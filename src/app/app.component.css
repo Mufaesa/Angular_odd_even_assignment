@@ -1,0 +1,11 @@
+/* game.component.css */
+
+.active {
+    color: green;
+    /* Apply your active styles here */
+}
+
+.inactive {
+    color: red;
+    /* Apply your inactive styles here */
+}
