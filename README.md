@@ -1,27 +1,53 @@
-# Assignment4Game
+# Odd-Even assignment
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+## The Repo
+This was an assignment as part of the Udemy Angular course by Maximilian Schwarzmüller.
 
-## Development server
+The goal of this assignment was the following:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. The GameControl Component should have buttons to start and stop the game
 
-## Code scaffolding
+2. When starting the game, an event (holding a incrementing number) should get emitted each second (ref = setInterval())
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3. The event should be listenable from outside the component
 
-## Build
+4. When stopping the game, no more events should get emitted (clearInterval(ref))
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+5. A new Odd component should get created for every odd number emitted, the same should happen for the Even Component (on even numbers)
 
-## Running unit tests
+6. Simply output Odd - NUMBER or Even - NUMBER in the two components
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+7. Style the element (e.g. paragraph) holding your output text
 
-## Running end-to-end tests
+I have completed this succesfully.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Challenges
+First of all, the scope of "this" changes when you are using "setInterval()". Only 10 minutes in, this was already causing the first headaches. Luckily I found a solution for this quickly by using the arrow documentation for this:
+```ts
+this.counterInterval = setInterval(() => this.startCounter(), 1000);
+```
 
-## Further help
+My second problem lied with Inputs and Outputs. I had a tough time actually passing through the number from 1 component to the next. This seems like a very important basic skill to have for Angular so I spent a lot of time on this.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The final solution was not very spectacular since it is using the basic tools to accomplish this: Output in the child component -> adding the event + listener to the parent HTML file -> Input in the parent component.
+
+The third challenge I walked into was displaying the correct number. In the course, Maximillan does show how to do this. Only he does this using TS objects instead of actual components. That's why this took some figuring out as well.
+
+I eventually ended up using a fairly standard solution for this as well which goes as follows:
+```html
+<div class="col" *ngIf="oddNumbers.length > 0">
+      <h4>Odd column</h4>
+      <app-odd 
+      *ngFor="let oddNumber of oddNumbers" 
+      [oddNumber]="oddNumber">
+      </app-odd>
+    </div>
+```
+## Things I learned
+* How to communicate between different components
+* How to dynamically use/style/display different components
+* Multi-layering of components
+* New ways how 'this' interacts withing different environments
+* Inputs and outputs
+* Event emitters
+
